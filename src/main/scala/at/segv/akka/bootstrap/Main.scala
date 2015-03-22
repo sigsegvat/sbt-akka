@@ -19,10 +19,8 @@ object Main {
 
   def main(args: Array[String]) = {
 
-
-
     val system = ActorSystem("botnet")
-    val actor: ActorRef = system.actorOf(EchoActor.props,"EchoActor")
+    val actor: ActorRef = system.actorOf(BrokerActor.props("EchoActor"),"EchoActor")
 
     logger.info(actor.toString())
 
@@ -40,13 +38,7 @@ object Main {
 
     def inputLoop(reader:BufferedReader):Unit = {
       reader.readLine() match {
-        case "exit" => {
-          system.shutdown()
-        }
-        case input: String => {
-          askEcho(input)
-          inputLoop(reader)
-        }
+        case "exit" => system.shutdown()
       }
     }
 
