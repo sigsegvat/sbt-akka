@@ -19,7 +19,7 @@ with WordSpecLike with Matchers with BeforeAndAfterAll {
 
   "BrokerActor" must {
         "always send PutOrder on Tick" in {
-          val actorRef = TestActorRef(BrokerActor.props("test"))
+          val actorRef = TestActorRef(BrokerActor.props("test", "test"))
           actorRef ! Tick(1,1,1,1)
           expectMsg(PutOrder(1))
 

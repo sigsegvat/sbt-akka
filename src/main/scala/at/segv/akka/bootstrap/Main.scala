@@ -20,20 +20,11 @@ object Main {
   def main(args: Array[String]) = {
 
     val system = ActorSystem("botnet")
-    val actor: ActorRef = system.actorOf(BrokerActor.props("EchoActor"),"EchoActor")
+    val actor: ActorRef = system.actorOf(BrokerActor.props(args(0), args(1)),"BrokerActor")
 
     logger.info(actor.toString())
 
-    def askEcho(ref: String) = {
-      implicit val ec = ExecutionContext.global
-      implicit val timeout = Timeout(2 seconds)
 
-      system.actorSelection(ref) ? "hello" onComplete {
-        case Success(s: String) => logger.info(s)
-        case Failure(f) => logger.info("failed to receive: " + f)
-      }
-
-    }
 
 
     def inputLoop(reader:BufferedReader):Unit = {
